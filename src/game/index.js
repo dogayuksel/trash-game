@@ -32,7 +32,7 @@ export default class Game extends Component {
   render() {
     return (
       <Loop>
-        <Stage style={{ background: '#f22' }}>
+        <Stage style={{ background: '#14d' }}>
           <World onInit={this.physicsInit}>
             <TrashItem
               store={GameStore}>

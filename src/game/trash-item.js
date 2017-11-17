@@ -22,6 +22,23 @@ export default class Game extends Component {
     store.setItemPosition(body.position);
   };
 
+  handleDrag = (e) => {
+    const { body } = this.body;
+    const speedVector = {
+      x: (e.clientX - body.position.x) / 10,
+      y: (e.clientY - body.position.y) / 10,
+    };
+    /* Last drag event fires x:0 y:0, omit when so */
+    if (e.clientX === 0 && e.clientY === 0) {
+      return
+    }
+    this.move(body, speedVector);
+  }
+
+  move = (body, speedVector) => {
+    Matter.Body.setVelocity(body, speedVector);
+  }
+
   componentDidMount() {
     Matter.Events.on(this.context.engine, 'afterUpdate', this.update);
   }
@@ -44,7 +61,10 @@ export default class Game extends Component {
   render() {
     const { x, y } = this.props.store.itemPosition;
     return (
-      <div style={this.getWrapperStyles()}>
+      <div
+        style={this.getWrapperStyles()}
+        onDrag={this.handleDrag}
+      >
         <Body
           args={[x, y, 100, 100]}
           inertia={Infinity}
