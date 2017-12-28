@@ -6,7 +6,7 @@ import Matter from 'matter-js';
 import { Body, Sprite } from 'react-game-kit';
 
 @observer
-export default class Game extends Component {
+export default class TrashItem extends Component {
   static propTypes = {
     store: PropTypes.object,
   };
@@ -18,21 +18,32 @@ export default class Game extends Component {
 
   update = () => {
     const { store } = this.props;
+    const { cursorPosition } = store;
     const { body } = this.body;
     store.setItemPosition(body.position);
+    if (store.userCarriesItem) {
+      const speedVector = {
+        x: (cursorPosition.x - body.position.x - 35) / 10,
+        y: (cursorPosition.y - body.position.y - 35) / 10,
+      };
+      this.move(body, speedVector);
+    }
   };
 
-  handleDrag = (e) => {
-    const { body } = this.body;
-    const speedVector = {
-      x: (e.clientX - body.position.x) / 10,
-      y: (e.clientY - body.position.y) / 10,
-    };
-    /* Last drag event fires x:0 y:0, omit when so */
-    if (e.clientX === 0 && e.clientY === 0) {
-      return
-    }
-    this.move(body, speedVector);
+  handleDragStart = (e) => {
+    e.preventDefault();
+  }
+
+  handleMouseDown = (e) => {
+    console.log('down');
+    const { store } = this.props;
+    store.toggleUserCarriesItem();
+  }
+
+  handleMouseUp = (e) => {
+    console.log('up');
+    const { store } = this.props;
+    store.toggleUserCarriesItem();
   }
 
   move = (body, speedVector) => {
@@ -63,10 +74,12 @@ export default class Game extends Component {
     return (
       <div
         style={this.getWrapperStyles()}
-        onDrag={this.handleDrag}
+        onDragStart={this.handleDragStart}
+        onMouseDown={this.handleMouseDown}
+        onMouseUp={this.handleMouseUp}
       >
         <Body
-          args={[x, y, 100, 100]}
+          args={[x, y, 71, 71]}
           inertia={Infinity}
           ref={b => {
               this.body = b;
