@@ -6,6 +6,7 @@ import { Loop, Stage, World } from 'react-game-kit';
 
 import config from '../config';
 
+import RedBox from './red-box';
 import TrashItem from './trash-item';
 import DebugCursor from './debug-cursor';
 import GameStore from './stores/game-store';
@@ -15,28 +16,33 @@ export default class Game extends Component {
 
   physicsInit = engine => {
     const ground = Matter.Bodies.rectangle(
-      512, 448, 1024, 64, {
+      512, 576, 1024, 20, {
+        isStatic: true,
+      });
+    const roof = Matter.Bodies.rectangle(
+      512, -10, 1024, 20, {
         isStatic: true,
       });
     const leftWall = Matter.Bodies.rectangle(
-      -64, 288, 64, 576, {
+      0, 288, 20, 576, {
         isStatic: true,
       });
     const rightWall = Matter.Bodies.rectangle(
-      960, 288, 64, 576, {
+      1024, 288, 20, 576, {
         isStatic: true,
       });
 
     Matter.World.addBody(engine.world, ground);
+    Matter.World.addBody(engine.world, roof);
     Matter.World.addBody(engine.world, leftWall);
     Matter.World.addBody(engine.world, rightWall);
   }
 
   handleMouseMove = (e) => {
     const {
-      top, width, height
+      left, top, width, height
     } = e.currentTarget.getBoundingClientRect();
-    const normalizedX = (e.clientX) / width * config.stageWidth;
+    const normalizedX = (e.clientX - left) / width * config.stageWidth;
     const normalizedY = ((e.clientY - top) /
       height * config.stageHeight);
     GameStore.setCursorPosition({ x: normalizedX, y: normalizedY });
@@ -69,6 +75,7 @@ export default class Game extends Component {
               onMouseUp={this.handleMouseUp}
             >
               {debug && <DebugCursor store={GameStore} />}
+              {debug && <RedBox store={GameStore} />}
               <TrashItem store={GameStore} />
             </div>
           </World>

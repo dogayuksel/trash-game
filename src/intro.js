@@ -24,10 +24,10 @@ export default class Intro extends Component {
     return (
       <div>
         <p className="start">
-          React Game Kit works
+          Thrash is not thrash!
         </p>
         <p className="description">
-          Press enter to continue
+          Learn how to make most of it.
         </p>
       </div>
     )

@@ -1,7 +1,10 @@
 import { observable } from 'mobx';
 
 class GameStore {
-  @observable itemPosition = { x: 0, y: 0 };
+  @observable itemPosition = { x: 90, y: 40 };
+  @observable itemAngle = 0;
+  @observable redBoxPosition = { x: 250, y: 40 };
+  @observable redBoxAngle = 0;
   @observable cursorPosition = { x: 0, y: 0 };
   @observable userCarriesItem = false;
 
@@ -13,8 +16,20 @@ class GameStore {
     this.itemPosition = position;
   }
 
-  toggleUserCarriesItem() {
-    this.userCarriesItem = !this.userCarriesItem;
+  setItemAngle(angle) {
+    this.itemAngle = angle;
+  }
+
+  setRedBoxPosition(position) {
+    this.redBoxPosition = position;
+  }
+
+  setRedBoxAngle(angle) {
+    this.redBoxAngle = angle;
+  }
+
+  setUserCarriesItemTrue() {
+    this.userCarriesItem = true;
   }
 
   setUserCarriesItemFalse() {
