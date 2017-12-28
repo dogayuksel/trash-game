@@ -35,13 +35,11 @@ export default class TrashItem extends Component {
   }
 
   handleMouseDown = (e) => {
-    console.log('down');
     const { store } = this.props;
     store.toggleUserCarriesItem();
   }
 
   handleMouseUp = (e) => {
-    console.log('up');
     const { store } = this.props;
     store.toggleUserCarriesItem();
   }

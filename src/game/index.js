@@ -43,7 +43,6 @@ export default class Game extends Component {
   }
 
   handleMouseLeave = (e) => {
-    console.log('handle out');
     GameStore.setUserCarriesItemFalse();
   }
 
