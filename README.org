@@ -1,0 +1,6 @@
+* Introduction
+  A simple game to teach sorting trash
+
+* matter.js and its poly-decomp dependency:
+  - imports it through global, monkey patch it back to require:
+  [[file:node_modules/matter-js/build/matter.js::var%20decomp%20=%20require('poly-decomp');][modify the build here]]

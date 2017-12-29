@@ -24,8 +24,8 @@ export default class Intro extends Component {
     return (
       <div>
         <p className="start">
-          Thrash is not thrash!
-        </p>
+          Trash is not trash!
+      </p>
         <p className="description">
           Learn how to make most of it.
         </p>

@@ -6,7 +6,19 @@ import Matter from 'matter-js';
 import { Body, Sprite } from 'react-game-kit';
 
 const asset = {
-  shape: 'circle',
+  shape: 'fromVertices',
+  vertices: [
+    {x: 1.25, y: 45.25},
+    {x: 38.25, y: 2},
+    {x: 71.5, y: 5.25},
+    {x: 97.5, y: 27.75},
+    {x: 90.5, y: 40.25},
+    {x: 94.5, y: 67.5},
+    {x: 79.75, y: 93.5},
+    {x: 69.25, y: 93.5},
+    {x: 51.75, y: 100},
+    {x: 15, y: 87.75}
+  ],
   radius: 50,
   imageRadius: 673,
   url: "assets/trash-piece.png",
@@ -95,10 +107,11 @@ export default class TrashItem extends Component {
         onMouseUp={this.handleMouseUp}
       >
         <Body
-          args={[x, y, asset.radius]}
+          args={[x, y, asset.vertices]}
           shape={asset.shape}
           frictionAir={0.001}
           friction={0.2}
+          restitution={0.3}
           ref={b => {
               this.body = b;
           }}>
