@@ -5,29 +5,11 @@ import Matter from 'matter-js';
 
 import { Body, Sprite } from 'react-game-kit';
 
-const asset = {
-  shape: 'fromVertices',
-  vertices: [
-    {x: 1.25, y: 45.25},
-    {x: 38.25, y: 2},
-    {x: 71.5, y: 5.25},
-    {x: 97.5, y: 27.75},
-    {x: 90.5, y: 40.25},
-    {x: 94.5, y: 67.5},
-    {x: 79.75, y: 93.5},
-    {x: 69.25, y: 93.5},
-    {x: 51.75, y: 100},
-    {x: 15, y: 87.75}
-  ],
-  radius: 50,
-  imageRadius: 673,
-  url: "assets/trash-piece.png",
-}
-
 @observer
-export default class TrashItem extends Component {
+class TrashItem extends Component {
   static propTypes = {
     store: PropTypes.object,
+    asset: PropTypes.object,
   };
 
   static contextTypes = {
@@ -82,14 +64,18 @@ export default class TrashItem extends Component {
     const { x, y } = this.props.store.itemPosition;
     const angle = this.props.store.itemAngle;
     const { scale } = this.context;
+    const { asset } = this.props;
 
-    const t_x = x - asset.radius;
-    const t_y = y - asset.radius;
+    const comoy_x = Math.sin(angle) * asset.centerOfMassOffsetY;
+    const comoy_y = Math.cos(angle) * asset.centerOfMassOffsetY;
+
+    const t_x = x - comoy_x - asset.width / 2;
+    const t_y = y + comoy_y - asset.height / 2;
 
     return {
       position: 'absolute',
-      width: `${asset.radius * 2 * scale}px`,
-      height: `${asset.radius * 2 * scale}px`,
+      width: `${asset.width * scale}px`,
+      height: `${asset.height * scale}px`,
       transform: (`translate(${t_x * scale}px, ` +
                   `${t_y * scale}px) ` +
                   `rotate(${angle}rad)`),
@@ -99,6 +85,7 @@ export default class TrashItem extends Component {
 
   render() {
     const { x, y } = this.props.store.itemPosition;
+    const { asset } = this.props;
     return (
       <div
         style={this.getWrapperStyles()}
@@ -119,11 +106,11 @@ export default class TrashItem extends Component {
             repeat={false}
             src={asset.url}
             scale={(this.context.scale *
-                2 * asset.radius) / asset.imageRadius}
+                asset.width) / asset.imageWidth}
             state={0}
             steps={[0]}
-            tileHeight={asset.imageRadius}
-            tileWidth={asset.imageRadius}
+            tileHeight={asset.imageHeight}
+            tileWidth={asset.imageWidth}
           >
           </Sprite>
         </Body>
@@ -131,3 +118,5 @@ export default class TrashItem extends Component {
     );
   }
 }
+
+export default TrashItem;

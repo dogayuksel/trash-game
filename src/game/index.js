@@ -7,7 +7,7 @@ import { Loop, Stage, World } from 'react-game-kit';
 import config from '../config';
 
 import RedBox from './red-box';
-import TrashItem from './trash-item';
+import TrashFactory from './TrashFactory';
 import DebugCursor from './debug-cursor';
 import GameStore from './stores/game-store';
 
@@ -76,7 +76,7 @@ export default class Game extends Component {
             >
               {debug && <DebugCursor store={GameStore} />}
               {debug && <RedBox store={GameStore} />}
-              <TrashItem store={GameStore} />
+              <TrashFactory store={GameStore} />
             </div>
           </World>
         </Stage>

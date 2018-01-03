@@ -1,7 +1,7 @@
 import { observable } from 'mobx';
 
 class GameStore {
-  @observable itemPosition = { x: 90, y: 40 };
+  @observable itemPosition = { x: 90, y: 60 };
   @observable itemAngle = 0;
   @observable redBoxPosition = { x: 250, y: 40 };
   @observable redBoxAngle = 0;
@@ -14,6 +14,10 @@ class GameStore {
 
   setItemPosition(position) {
     this.itemPosition = position;
+  }
+
+  resetItemPosition(position) {
+    this.itemPosition = { x: 90, y: 60 };
   }
 
   setItemAngle(angle) {
